@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_and_reg_app/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .mybody {
+            background-image: url("{% static 'login_and_reg_app/img/NinjaPurple.png' %}");
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+
+<body class="mybody">
+    <!-- Header toolbar -->
+    <div class="universalheader">
+        <div class="sidebyside">
+            <h3>Hello {{request.session.user}}!!</h3>
+        </div>
+        <div class="sidebyside fixedTopRight">
+            <table>
+                <tr class="table table-borderless">
+                    <td><a href="/logout" class="accessible">Log Out</a></h3>
+                    </td>
+                    <td>
+                        <form action="/trips/create" method="GET">
+                            <input class="btn btn-primary" type="submit" value="Create a new trip">
+                        </form>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="wrapper">
+        <h4>Your trips:</h4>
+        <table class="table table-bordered table-striped sidetoside ">
+            <thead class="thead-dark">
+                <th>Destination</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Plan</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                {% for trip in all_user_trips%}
+                <tr>
+                    <td><a href="/trips/{{trip.id}}" class="accessible">{{trip.destination}}</a></td>
+                    <td>{{trip.start_date | date:'F d, Y'}}
+                    <td>{{trip.end_date | date:'F d, Y'}}
+                    <td>{{trip.plan}}</td>
+                    </td>
+                    <td><a href="/trips/remove/{{trip.id}}" class="accessible">Remove</a> | <a class="accessible"
+                            href="/trips/edit/{{trip.id}}">Edit</a> </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>Other people's trips:</h4>
+        <table class="table table-bordered table-striped sidetoside ">
+            <thead class="thead-dark">
+                <th>Destination</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Plan</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                {% for trip in all_other_trips%}
+                <tr>
+                    <td><a href="/trips/{{trip.id}}" class="accessible">{{trip.destination}}</a></td>
+                    <td>{{trip.start_date | date:'F d, Y'}}
+                    <td>{{trip.end_date | date:'F d, Y'}}
+                    <td>{{trip.plan}}</td>
+                    </td>
+                    <td><a href="/trips/join/{{trip.id}}" class="accessible">Join</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>

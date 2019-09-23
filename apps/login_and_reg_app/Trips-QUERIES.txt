@@ -1,0 +1,6 @@
+>>> from apps.login_and_reg_app.models import *
+>>> us=User.objects.get(id=1)
+>>> trip=Trips.objects.create(destination="Guadalajara", start_date="2019-10-05", end_date="2019-10-12", plan="Ir por el vestido", user_id=us)
+>>> print(trip.destination)
+Guadalajara
+>>> print(trip.values())
